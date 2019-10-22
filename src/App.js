@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from './components/MenuComponent';
+import DishDetail from './components/DishdetailComponent'
 import { DISHES } from './shared/dishes';
 
 
@@ -23,6 +24,7 @@ class App extends React.Component {
           </div>
         </Navbar>
         <Menu dishes={this.state.dishes} />
+        <DishDetail />
       </div>
     );
   }
