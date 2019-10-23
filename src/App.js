@@ -24,7 +24,7 @@ class App extends React.Component {
           </div>
         </Navbar>
         <Menu dishes={this.state.dishes} />
-        <DishDetail />
+        {/* <DishDetail /> */}
       </div>
     );
   }
