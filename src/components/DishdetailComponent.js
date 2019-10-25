@@ -3,12 +3,9 @@ import { Media } from 'reactstrap';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
   CardTitle } from 'reactstrap';
 
-class DishDetail extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   
-  renderDish(dish) {
+  function RenderDish(dish) {
     if (dish != null)
       return(
         <Card>
@@ -25,13 +22,13 @@ class DishDetail extends Component {
       );
   }
 
-  renderComment(commentsList){
+  function RenderComments(commentsList){
     if (commentsList != null) {
       const comment = commentsList.map((val) => {
         return(
                 <div>
                   <div>{val.comment}</div>
-                  <div>-- {val.author}, {val.date}</div>
+                  <div>-- {val.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(val.date)))}</div>
                 </div>
         )
       })
@@ -50,24 +47,29 @@ class DishDetail extends Component {
     }
   }
 
-  render() {
-    var comm = null
-    if(this.props.chosenDish != null){
-      comm = this.props.chosenDish.comments
-    }
-    
-    return (
+const  DishDetail = (props) => {
+  var comm = null
+  if(props.chosenDish != null){
+    comm = props.chosenDish.comments
+  }
+  
+  return (
+    <div className="container">
       <div className="row">
         <div  className="col-12 col-md-5 m-1">
-          {this.renderDish(this.props.chosenDish)}    
+          <RenderDish dish={props.chosenDish} />    
         </div>
         <div  className="col-12 col-md-5 m-1">
-          {this.renderComment(comm)}
+          <RenderComments commentsList={comm} />
         </div>
       </div> 
-    );
-  }
-
+    </div>
+  );
 }
+
+
+  
+
+
 
 export default DishDetail;
