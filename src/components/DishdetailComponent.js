@@ -5,8 +5,8 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
 
 
   
-  function RenderDish(dish) {
-    if (dish != null)
+  function RenderDish({dish}) {
+    if (dish != null){
       return(
         <Card>
           <CardImg top src={dish.image} alt={dish.name} />
@@ -16,15 +16,17 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
           </CardBody>
         </Card>
       );
-    else
+    }else{
       return(
           <div></div>
       );
   }
+}
 
-  function RenderComments(commentsList){
-    if (commentsList != null) {
-      const comment = commentsList.map((val) => {
+  function RenderComments({comments}){
+    if (comments != null) {
+
+      const showComment = comments.map((val) => {
         return(
                 <div>
                   <div>{val.comment}</div>
@@ -36,7 +38,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
         <div>
           <h4>Comments</h4>
           <ul class = "list-unstyled">
-            {comment}
+            {showComment}
           </ul>
         </div>
       )
@@ -48,28 +50,25 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
   }
 
 const  DishDetail = (props) => {
-  var comm = null
-  if(props.chosenDish != null){
-    comm = props.chosenDish.comments
+  
+  if(props.dish){
+    return (
+      <div className="container">
+        <div className="row">
+          <div  className="col-12 col-md-5 m-1">
+            <RenderDish dish={props.dish} />    
+          </div>
+          <div  className="col-12 col-md-5 m-1">
+            <RenderComments comments={props.dish.comments} />
+          </div>
+        </div> 
+      </div>
+    );
+  } else{
+    return (
+      <div className="col-12" />
+    )
   }
-  
-  return (
-    <div className="container">
-      <div className="row">
-        <div  className="col-12 col-md-5 m-1">
-          <RenderDish dish={props.chosenDish} />    
-        </div>
-        <div  className="col-12 col-md-5 m-1">
-          <RenderComments commentsList={comm} />
-        </div>
-      </div> 
-    </div>
-  );
 }
-
-
-  
-
-
 
 export default DishDetail;
