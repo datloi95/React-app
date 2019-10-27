@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Navbar, NavbarBrand } from 'reactstrap';
-import Menu from './components/MenuComponent';
-import { DISHES } from './shared/dishes';
+import React, { Component } from 'react';
 import Main from './components/MainComponent';
+import './App.css';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
 
-class App extends React.Component {
-  
+const store = ConfigureStore();
+
+class App extends Component {
+
   render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <Main />
-        </div>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <div>
+            <Main />
+          </div>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
-
 
 export default App;
