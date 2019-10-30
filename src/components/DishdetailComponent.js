@@ -27,7 +27,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
   }
 }
 
-  function RenderComments({comments}){
+  function RenderComments({comments, addComment, dishId}) {
     if (comments != null) {
 
       const showComment = comments.map((val) => {
@@ -44,6 +44,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
           <ul class = "list-unstyled">
             {showComment}
           </ul>
+          <CommentForm dishId={dishId} addComment={addComment} />
         </div>
       )
     } else{
@@ -65,7 +66,7 @@ class CommentForm extends Component {
       isModalOpen: false
     };
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   toggleNav() {
@@ -80,11 +81,12 @@ class CommentForm extends Component {
     });
   }
 
-  handleLogin(event) {
+  handleSubmit(values) {
     this.toggleModal();
     alert("Rating: " + this.name.value + " Name: " + this.name.value
         + " Comment: " + this.comment.value);
-    event.preventDefault();
+
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render(){
@@ -97,7 +99,7 @@ class CommentForm extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={this.handleLogin}>
+            <LocalForm onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label htmlFor="rating">Rating </Label>
                 <Col>
@@ -172,8 +174,7 @@ const  DishDetail = (props) => {
                 <RenderDish dish={props.dish} />
             </div>
             <div className="col-12 col-md-5 m-1">
-                <RenderComments comments={props.comments} />
-                <CommentForm />
+            <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
             </div>
         </div>
       </div>
