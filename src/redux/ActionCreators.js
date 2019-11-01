@@ -104,6 +104,11 @@ export const commentsFailed = (errmess) => ({
     payload: errmess
 });
 
+export const addComments = (comments) => ({
+  type: ActionTypes.ADD_COMMENTS,
+  payload: comments
+});
+
 export const fetchPromos = () => (dispatch) => {
     
     dispatch(promosLoading());
